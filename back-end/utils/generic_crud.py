@@ -20,13 +20,9 @@ def write_csv(filename: str, data: List[Dict[str, Any]]):
             writer.writerows(data)
 
 def create_record(filename: str, record: T):
-    if not os.path.exists(filename):
-        # Cria o CSV com cabeçalho
-        write_csv(filename, [record.dict()])
-    else:
-        with open(filename, mode='a', newline='') as file:
-            writer = csv.DictWriter(file, fieldnames=record.dict().keys())
-            writer.writerow(record.dict())
+    with open(filename, mode='a', newline='') as file:
+        writer = csv.DictWriter(file, fieldnames=record.dict().keys())
+        writer.writerow(record.dict())
     return get_all_records(filename)
 
 def get_all_records(filename: str) -> List[Dict[str, Any]]:
@@ -35,7 +31,7 @@ def get_all_records(filename: str) -> List[Dict[str, Any]]:
 def get_record_by_id(filename: str, record_id: str) -> Optional[Dict[str, Any]]:
     records = read_csv(filename)
     for record in records:
-        if record["id"] == record_id:
+        if int(record["id"]) == record_id:
             return record
     return None
 
@@ -43,17 +39,19 @@ def update_record(filename: str, record_id: str, updated_data: T):
     records = read_csv(filename)
     updated = False
     for record in records:
-        if record["id"] == record_id:
+        if int(record["id"]) == record_id:
             record.update(updated_data.dict())
             updated = True
             break
     if updated:
         write_csv(filename, records)
-    return get_all_records(filename)
+        return True
+    return False
 
 def delete_record(filename: str, record_id: str):
     records = read_csv(filename)
-    filtered = [record for record in records if record["id"] != record_id]
+    filtered = [record for record in records if int(record["id"]) != record_id]
     if len(filtered) != len(records):
         write_csv(filename, filtered)
-    return get_all_records(filename)
+        return True
+    return False
