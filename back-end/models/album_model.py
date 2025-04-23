@@ -3,7 +3,7 @@ from typing import Optional
 
 class AlbumCreate(BaseModel):
     nome: str
-    id_autor: str
+    artista_id: str
     data_lancamento: str
     gravadora: Optional[str] = None
 

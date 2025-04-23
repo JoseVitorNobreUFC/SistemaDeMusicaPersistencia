@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from controllers import artista_controller
+from controllers import artista_controller, album_controller
 import os
 import csv
 app = FastAPI()
@@ -10,6 +10,7 @@ async def root():
   return {"message": "Hello World"}
 
 app.include_router(artista_controller.router, prefix="/artistas", tags=["Artistas"])
+app.include_router(album_controller.router, prefix="/albuns", tags=["Albuns"])
 
 
 # Função que verifica se o arquivo CSV existe e cria um se ele não existir
