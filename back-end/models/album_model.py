@@ -1,8 +1,11 @@
 from pydantic import BaseModel
+from typing import Optional
 
-class Album(BaseModel):
-  id: int
-  nome: str
-  artista_id: int
-  data_lancamento: str ## Passar pra DateTime depois
-  gravadora: str
+class AlbumCreate(BaseModel):
+    nome: str
+    id_autor: str
+    data_lancamento: str
+    gravadora: Optional[str] = None
+
+class AlbumModel(AlbumCreate):
+    id: int

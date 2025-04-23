@@ -1,6 +1,6 @@
 from services import artista_service
 from fastapi import APIRouter, HTTPException
-from models.artista_model import Artista
+from models.artista_model import ArtistaCreate
 
 router = APIRouter()
 
@@ -15,12 +15,12 @@ def get_artist_by_id(artist_id: int):
 
 
 @router.post("/")
-def create_artist(artist: Artista):
+def create_artist(artist: ArtistaCreate):
   return artista_service.create_artist(artist)
 
 
 @router.put("/{artist_id}")
-def update_artist(artist_id: int, artist: Artista):
+def update_artist(artist_id: int, artist: ArtistaCreate):
   return artista_service.update_artist(artist_id, artist)
 
 

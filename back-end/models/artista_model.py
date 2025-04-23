@@ -1,8 +1,11 @@
 from pydantic import BaseModel
+from typing import Optional
 
-class Artista(BaseModel):
-  id: int
-  nome: str
-  genero: str
-  data_estreia: str ## Passar pra DateTime depois
-  sobre: str
+class ArtistaCreate(BaseModel):
+    nome: str
+    genero: str
+    data_estreia: str
+    sobre: Optional[str] = None
+
+class ArtistaModel(ArtistaCreate):
+    id: int
