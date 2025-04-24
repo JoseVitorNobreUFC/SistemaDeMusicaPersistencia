@@ -1,1 +1,4 @@
-id,nome,album_id,data_lancamento,duracao
+id,nome,id_album,data_lancamento,duracao
+1,Stairway to Heaven,1,08/11/1971,08:02
+2,Stairway to Heaven,1,08/11/1971,08:02
+3,Paranoid,2,18/09/1970,02:57

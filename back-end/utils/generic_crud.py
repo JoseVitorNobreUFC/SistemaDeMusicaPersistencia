@@ -3,7 +3,6 @@ import os
 from typing import List, Optional, Dict, Any
 from pydantic import BaseModel
 
-
 def read_csv(filename: str) -> List[Dict[str, Any]]:
     if not os.path.exists(filename):
         return []
