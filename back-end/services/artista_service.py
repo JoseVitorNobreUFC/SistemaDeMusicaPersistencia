@@ -8,8 +8,10 @@ from utils.generic_crud import (
 )
 from models.artista_model import ArtistaCreate, ArtistaModel
 from typing import Dict
+from fastapi import HTTPException
 
 AUTHOR_CSV_PATH = './data/artists.csv'
+ALBUM_CSV_PATH = './data/albuns.csv'
 
 def get_all_artists():
   return get_all_records(AUTHOR_CSV_PATH)
@@ -37,6 +39,10 @@ def update_artist(artist_id: int, artist: ArtistaCreate):
   }
   return update_record(AUTHOR_CSV_PATH, artist_id, ordered_data)
 
-def delete_artist(artist_id):
+def delete_artist(artist_id: int):
+  albuns = get_all_records(ALBUM_CSV_PATH)
+  for album in albuns:
+    if int(album["artista_id"]) == artist_id:
+      raise HTTPException(status_code=400, detail="Artista possui albuns")
   return delete_record(AUTHOR_CSV_PATH, artist_id)
 
