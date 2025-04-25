@@ -8,4 +8,4 @@ class MusicaCreate(BaseModel):
     duracao: Optional[str] = None
 
 class MusicaModel(MusicaCreate):
-    id: number
+    id: int
