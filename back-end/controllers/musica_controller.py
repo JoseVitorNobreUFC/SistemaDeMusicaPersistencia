@@ -1,12 +1,50 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, BackgroundTasks
 from models.musica_model import MusicaCreate
 from services import musica_service
+from fastapi.responses import FileResponse
+import os
 
 router = APIRouter()
 
 @router.get("/")
 def get_all_musics():
     return musica_service.get_all_musics()
+
+@router.get("/exportar")
+def exportar_musics_csv(background_tasks: BackgroundTasks):
+    zip_path = musica_service.export_musics_as_zip()
+
+    def remove_file(path: str):
+        if os.path.exists(path):
+            os.remove(path)
+
+    background_tasks.add_task(remove_file, zip_path)
+
+    return FileResponse(
+        path=zip_path,
+        filename='musics_export.zip',
+        media_type='application/zip'
+    )
+
+@router.get("/hash")
+def get_musics_csv_hash():
+    return {"hash": musica_service.get_musics_csv_hash()}
+
+@router.get("/exportar-xml")
+def exportar_musics_xml(background_tasks: BackgroundTasks):
+    xml_path = musica_service.export_musics_as_xml()
+
+    def remove_file(path: str):
+        if os.path.exists(path):
+            os.remove(path)
+
+    background_tasks.add_task(remove_file, xml_path)
+
+    return FileResponse(
+        path=xml_path,
+        filename='musics_export.xml',
+        media_type='application/xml'
+    )
 
 @router.get("/{music_id}")
 def get_music_by_id(music_id: int):

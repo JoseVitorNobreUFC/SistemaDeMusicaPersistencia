@@ -2,6 +2,9 @@ import csv
 import os
 from typing import List, Optional, Dict, Any
 from pydantic import BaseModel
+import zipfile
+import hashlib
+import xml.etree.ElementTree as ET
 
 def read_csv(filename: str) -> List[Dict[str, Any]]:
     if not os.path.exists(filename):
@@ -16,6 +19,40 @@ def write_csv(filename: str, data: List[Dict[str, Any]]):
             writer = csv.DictWriter(file, fieldnames=data[0].keys())
             writer.writeheader()
             writer.writerows(data)
+
+def convert_file_to_zip(zip_path: str, files_to_zip: List[str], arc_names: Optional[List[str]] = None):
+    with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
+        for i, file_path in enumerate(files_to_zip):
+            arcname = arc_names[i] if arc_names and i < len(arc_names) else os.path.basename(file_path)
+            zipf.write(file_path, arcname=arcname)
+
+def calculate_file_sha256(file_path: str) -> str:
+    if not os.path.exists(file_path):
+        return ""
+
+    sha256_hash = hashlib.sha256()
+    with open(file_path, "rb") as f:
+        for byte_block in iter(lambda: f.read(4096), b""):
+            sha256_hash.update(byte_block)
+    return sha256_hash.hexdigest()
+
+def convert_csv_to_xml(csv_path: str, xml_path: str, root_tag: str = "Records", record_tag: str = "Record") -> bool:
+    records = read_csv(csv_path)
+    if not records:
+        return False
+
+    root = ET.Element(root_tag)
+
+    for record in records:
+        record_elem = ET.SubElement(root, record_tag)
+        for key, value in record.items():
+            field_elem = ET.SubElement(record_elem, key)
+            field_elem.text = value
+
+    tree = ET.ElementTree(root)
+    tree.write(xml_path, encoding="utf-8", xml_declaration=True)
+    return True
+
 
 def get_next_id(filename: str) -> int:
     records = read_csv(filename)
