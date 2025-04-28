@@ -29,7 +29,7 @@ def exportar_album_csv(background_tasks: BackgroundTasks):
 
 @router.get("/hash")
 def get_album_csv_hash():
-  return {"hash": album_service.get_album_csv_hash()}
+  return {"hash": album_service.get_albums_csv_hash()}
 
 @router.get("/exportar-xml")
 def exportar_album_xml(background_tasks: BackgroundTasks):

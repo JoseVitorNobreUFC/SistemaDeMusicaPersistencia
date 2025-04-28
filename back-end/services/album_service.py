@@ -69,7 +69,7 @@ def export_albums_as_zip() -> str:
   return zip_path
 
 def get_albums_csv_hash():
-  csv_path = './data/albums.csv'
+  csv_path = './data/albuns.csv'
   if not os.path.exists(csv_path):
     raise HTTPException(status_code=404, detail="Arquivo CSV de álbuns não encontrado")
   return calculate_file_sha256(csv_path)
