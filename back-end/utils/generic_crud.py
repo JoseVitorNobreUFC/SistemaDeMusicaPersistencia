@@ -105,3 +105,14 @@ def delete_record(filename: str, record_id: int):
         write_csv(filename, filtered)
         return True
     return False
+
+def search_by_field(filename: str, field: str, value: str) -> List[Dict[str, Any]]:
+    records = read_csv(filename)
+    results = []
+
+    for record in records:
+        if field in record:
+            if value.lower() in record[field].lower():
+                results.append(record)
+    
+    return results

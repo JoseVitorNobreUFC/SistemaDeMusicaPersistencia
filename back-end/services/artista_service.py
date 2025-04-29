@@ -7,7 +7,8 @@ from utils.generic_crud import (
   get_next_id,
   convert_file_to_zip,
   calculate_file_sha256,
-  convert_csv_to_xml
+  convert_csv_to_xml,
+  search_by_field
 )
 from models.artista_model import ArtistaCreate, ArtistaModel
 from typing import Dict
@@ -75,3 +76,9 @@ def export_artists_as_xml() -> str:
     raise HTTPException(status_code=400, detail="Erro ao gerar XML")
 
   return xml_path
+
+def get_artists_quantity():
+  return get_all_artists().__len__()
+
+def search_artist(field: str, value: str):
+  return search_by_field(AUTHOR_CSV_PATH, field, value)

@@ -1,5 +1,5 @@
 from services import artista_service
-from fastapi import APIRouter, HTTPException, BackgroundTasks
+from fastapi import APIRouter, HTTPException, BackgroundTasks, Query
 from models.artista_model import ArtistaCreate
 from fastapi.responses import FileResponse
 import os
@@ -10,7 +10,15 @@ router = APIRouter()
 def get_all_artists():
   return artista_service.get_all_artists()
 
-@router.get("/exportar")
+@router.get("/visualizar/quantidade")
+def get_artists_count():
+  return {"quantidade": artista_service.get_artists_quantity()}
+
+@router.get("/search")
+def search_artist(field: str = Query(...), value: str = Query(...)):
+  return artista_service.search_artist(field, value)
+
+@router.get("/exportar/zip")
 def exportar_artists_csv(background_tasks: BackgroundTasks):
   zip_path = artista_service.export_artists_as_zip()
 
@@ -26,11 +34,11 @@ def exportar_artists_csv(background_tasks: BackgroundTasks):
     media_type='application/zip'
   )
 
-@router.get("/hash")
+@router.get("/visualizar/hash")
 def get_artists_csv_hash():
   return {"hash": artista_service.get_artists_csv_hash()}
 
-@router.get("/exportar-xml")
+@router.get("/exportar/xml")
 def exportar_artists_xml(background_tasks: BackgroundTasks):
     xml_path = artista_service.export_artists_as_xml()
 
@@ -53,7 +61,6 @@ def get_artist_by_id(artist_id: int):
   if not artist:
     raise HTTPException(status_code=404, detail="Artista nao encontrado")
   return artist
-
 
 @router.post("/")
 def create_artist(artist: ArtistaCreate):

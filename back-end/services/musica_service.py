@@ -7,7 +7,8 @@ from utils.generic_crud import (
     get_next_id,
     convert_file_to_zip,
     calculate_file_sha256,
-    convert_csv_to_xml
+    convert_csv_to_xml,
+    search_by_field
 )
 from models.musica_model import MusicaCreate, MusicaModel
 from typing import Dict
@@ -77,3 +78,9 @@ def export_musics_as_xml() -> str:
         raise HTTPException(status_code=400, detail="Erro ao gerar XML")
 
     return xml_path
+
+def get_musics_quantity():
+    return get_all_musics().__len__()
+
+def search_music(field: str, value: str):
+  return search_by_field(MUSIC_CSV_PATH, field, value)
