@@ -20,6 +20,11 @@ MUSIC_CSV_PATH = './data/musics.csv'
 ALBUM_CSV_PATH = './data/albuns.csv'
 
 def get_all_musics():
+    if not os.path.exists(MUSIC_CSV_PATH):
+        logger.log_error("Arquivo CSV de músicas nao encontrado")
+        raise HTTPException(status_code=404, detail="Arquivo CSV de músicas nao encontrado")
+    
+    logger.log_info("Buscando todas as músicas")
     return get_all_records(MUSIC_CSV_PATH)
 
 def get_music_by_id(music_id: int):
@@ -27,6 +32,8 @@ def get_music_by_id(music_id: int):
     if not music:
         logger.log_error("Erro: Musica nao encontrada")
         raise HTTPException(status_code=404, detail="Música nao encontrada")
+
+    logger.log_info("Buscando musica")
     return music
 
 def check_empty_fields(ordered_data: Dict[str, str]):
@@ -130,7 +137,9 @@ def export_musics_as_xml() -> str:
     return xml_path
 
 def get_musics_quantity():
+    logger.log_info("Quantidade de músicas")
     return get_all_musics().__len__()
 
 def search_music(field: str, value: str):
+  logger.log_info("Pesquisando músicas")
   return search_by_field(MUSIC_CSV_PATH, field, value)
