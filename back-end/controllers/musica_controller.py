@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, BackgroundTasks
+from fastapi import APIRouter, HTTPException, BackgroundTasks, Query
 from models.musica_model import MusicaCreate
 from services import musica_service
 from fastapi.responses import FileResponse
@@ -10,7 +10,15 @@ router = APIRouter()
 def get_all_musics():
     return musica_service.get_all_musics()
 
-@router.get("/exportar")
+@router.get("/visualizar/quantidade")
+def get_musics_count():
+    return {"quantidade": musica_service.get_musics_quantity()}
+
+@router.get("/search")
+def search_music(field: str = Query(...), value: str = Query(...)):
+    return musica_service.search_music(field, value)
+
+@router.get("/exportar/zip")
 def exportar_musics_csv(background_tasks: BackgroundTasks):
     zip_path = musica_service.export_musics_as_zip()
 
@@ -26,11 +34,11 @@ def exportar_musics_csv(background_tasks: BackgroundTasks):
         media_type='application/zip'
     )
 
-@router.get("/hash")
+@router.get("/visualizar/hash")
 def get_musics_csv_hash():
     return {"hash": musica_service.get_musics_csv_hash()}
 
-@router.get("/exportar-xml")
+@router.get("/exportar/xml")
 def exportar_musics_xml(background_tasks: BackgroundTasks):
     xml_path = musica_service.export_musics_as_xml()
 
@@ -49,8 +57,6 @@ def exportar_musics_xml(background_tasks: BackgroundTasks):
 @router.get("/{music_id}")
 def get_music_by_id(music_id: int):
     music = musica_service.get_music_by_id(music_id)
-    if not music:
-        raise HTTPException(status_code=404, detail="Música não encontrada")
     return music
 
 @router.post("/")
@@ -60,13 +66,9 @@ def create_music(music: MusicaCreate):
 @router.put("/{music_id}")
 def update_music(music_id: int, music: MusicaCreate):
     success = musica_service.update_music(music_id, music)
-    if not success:
-        raise HTTPException(status_code=404, detail="Música não encontrada para atualização")
     return {"message": "Música atualizada com sucesso"}
 
 @router.delete("/{music_id}")
 def delete_music(music_id: int):
     success = musica_service.delete_music(music_id)
-    if not success:
-        raise HTTPException(status_code=404, detail="Música não encontrada para exclusão")
     return {"message": "Música excluída com sucesso"}

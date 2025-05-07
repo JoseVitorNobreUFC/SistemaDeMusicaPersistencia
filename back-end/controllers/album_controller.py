@@ -1,5 +1,5 @@
 from services import album_service
-from fastapi import APIRouter, HTTPException, BackgroundTasks
+from fastapi import APIRouter, HTTPException, BackgroundTasks, Query
 from models.album_model import AlbumCreate
 from fastapi.responses import FileResponse
 import os
@@ -11,7 +11,15 @@ router = APIRouter()
 def get_all_albums():
   return album_service.get_all_albums()
 
-@router.get("/exportar")
+@router.get("/visualizar/quantidade")
+def get_albums_count():
+  return {"quantidade": album_service.get_album_quantity()}
+
+@router.get("/search")
+def search_album(field: str = Query(...), value: str = Query(...)):
+  return album_service.search_album(field, value)
+
+@router.get("/exportar/zip")
 def exportar_album_csv(background_tasks: BackgroundTasks):
   zip_path = album_service.export_albums_as_zip()
 
@@ -27,11 +35,11 @@ def exportar_album_csv(background_tasks: BackgroundTasks):
     media_type='application/zip'
   )
 
-@router.get("/hash")
+@router.get("/visualizar/hash")
 def get_album_csv_hash():
   return {"hash": album_service.get_albums_csv_hash()}
 
-@router.get("/exportar-xml")
+@router.get("/exportar/xml")
 def exportar_album_xml(background_tasks: BackgroundTasks):
     xml_path = album_service.export_albums_as_xml()
 
@@ -50,10 +58,7 @@ def exportar_album_xml(background_tasks: BackgroundTasks):
 @router.get("/{album_id}")
 def get_album_by_id(album_id: int):
   album = album_service.get_album_by_id(album_id)
-  if not album:
-    raise HTTPException(status_code=404, detail="Album nao encontrado")
   return album
-
 
 @router.post("/")
 def create_album(album: AlbumCreate):
@@ -63,14 +68,10 @@ def create_album(album: AlbumCreate):
 @router.put("/{album_id}")
 def update_album(album_id: int, album: AlbumCreate):
   success = album_service.update_album(album_id, album)
-  if not success:
-    raise HTTPException(status_code=404, detail="Album nao encontrado para atualizacao")
   return {"message": "Album atualizado com sucesso"}
 
 @router.delete("/{album_id}")
 def delete_album(album_id: int):
   success = album_service.delete_album(album_id)
-  if not success:
-    raise HTTPException(status_code=404, detail="Album nao encontrado pra exclusao")
   return {"message": "Album excluido com sucesso"}
 
