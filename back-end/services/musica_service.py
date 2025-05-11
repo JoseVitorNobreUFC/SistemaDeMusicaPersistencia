@@ -37,15 +37,17 @@ def get_music_by_id(music_id: int):
     return music
 
 def check_empty_fields(ordered_data: Dict[str, str]):
+    empty_fields = []
     if not ordered_data["nome"]:
-        logger.log_error("Erro: Nome nao pode ser vazio")
-        raise HTTPException(status_code=400, detail="Nome nao pode ser vazio")
+        empty_fields.append("nome")
     if not ordered_data["id_album"]:
-        logger.log_error("Erro: Album nao pode ser vazio")
-        raise HTTPException(status_code=400, detail="Album nao pode ser vazio")
+        empty_fields.append("id_album")
     if not ordered_data["data_lancamento"]:
-        logger.log_error("Erro: Data de lancamento nao pode ser vazia")
-        raise HTTPException(status_code=400, detail="Data de lancamento nao pode ser vazia")
+        empty_fields.append("data_lancamento")
+
+    if empty_fields:
+        logger.log_error(f"Erro: Campos {', '.join(empty_fields)} nao podem ser vazios")
+        raise HTTPException(status_code=400, detail=f"Campos {', '.join(empty_fields)} nao podem ser vazios")
 
 def create_music(music: MusicaCreate):
     album = get_record_by_id(ALBUM_CSV_PATH, int(music.id_album))

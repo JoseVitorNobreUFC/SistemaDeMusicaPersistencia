@@ -37,15 +37,17 @@ def get_artist_by_id(artist_id):
   return artist
 
 def check_empty_fields(ordered_data: Dict[str, str]):
+  empty_fields = []
   if not ordered_data["nome"]:
-    logger.log_error("Erro: Nome nao pode ser vazio")
-    raise HTTPException(status_code=400, detail="Nome nao pode ser vazio")
+    empty_fields.append("nome")
   if not ordered_data["genero"]:
-    logger.log_error("Erro: Genero nao pode ser vazio")
-    raise HTTPException(status_code=400, detail="Genero nao pode ser vazio")
+    empty_fields.append("genero")
   if not ordered_data["data_estreia"]:
-    logger.log_error("Erro: Data de estreia nao pode ser vazia")
-    raise HTTPException(status_code=400, detail="Data de estreia nao pode ser vazia")
+    empty_fields.append("data_estreia")
+
+  if empty_fields:
+    logger.log_error(f"Erro: Campos {', '.join(empty_fields)} nao podem ser vazios")
+    raise HTTPException(status_code=400, detail=f"Campos {', '.join(empty_fields)} nao podem ser vazios")
 
 
 def create_artist(artist: ArtistaCreate):
