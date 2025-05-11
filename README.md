@@ -132,3 +132,17 @@ Neste trabalho será desenvolvido um CRUD para um sistema de musica, as entidade
     </tr>
   </tbody>
 </table>
+
+## Atribuições
+<table>
+  <tr>
+     <td align="center"><a href="https://github.com/JoseVitorNobreUFC"><img src="https://avatars.githubusercontent.com/u/62249331?v=4" width="100px;" alt="José Vitor"/><br /><sub><b>José Vitor</b></sub></a><br /><a href="https://github.com/JoseVitorNobreUFC" title="BackEnd">
+     </a><br/>
+     <span>CRUD Artista, Album, tasks f2, f3, f5, f7 e documentação</span>
+     </td>
+     <td align="center"><a href="https://github.com/alexsonalmeida"><img src="https://avatars.githubusercontent.com/u/101877352?v=4" width="100px;" alt="Higor Santiago"/><br /><sub><b>Alexson Almeida</b></sub></a><br /><a href="https://github.com/alexsonalmeida" title="FrontEnd">
+     </a><br/>
+     <span>CRUD Musicas, tasks f2, f4, f6, f8 e testes</span>
+     </td>
+  </tr>
+</table>
