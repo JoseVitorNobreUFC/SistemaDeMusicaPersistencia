@@ -25,4 +25,4 @@ def ensure_csv_exists(filename: str, fieldnames: list):
 def startup_event():
     ensure_csv_exists("data/artists.csv", ["id", "nome", "genero", "data_estreia", "sobre"])
     ensure_csv_exists("data/albuns.csv", ["id", "nome", "artista_id", "data_lancamento", "gravadora"])
-    ensure_csv_exists("data/musics.csv", ["id", "nome", "album_id", "data_lancamento", "duracao"])
+    ensure_csv_exists("data/musics.csv", ["id", "nome", "id_album", "data_lancamento", "duracao"])

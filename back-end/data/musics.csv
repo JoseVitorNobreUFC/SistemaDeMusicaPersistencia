@@ -1,4 +1,4 @@
-id,nome,album_id,data_lancamento,duracao
+id,nome,id_album,data_lancamento,duracao
 1,Crazy in Love,1,2003-05-18,3:56
 2,Blinding Lights,2,2019-11-29,3:20
 3,Rolling in the Deep,3,2010-11-29,3:48
