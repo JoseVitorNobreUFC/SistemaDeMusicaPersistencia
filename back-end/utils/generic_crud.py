@@ -63,9 +63,7 @@ def get_next_id(filename: str) -> int:
 
 def create_record(filename: str, record: Dict[str, Any]):
     fieldnames = list(record.keys())
-    with open(filename, mode='a', newline='') as file:
-        writer = csv.DictWriter(file, fieldnames=fieldnames)
-        writer.writerow(record)
+    write_csv(filename, [record])
     return get_all_records(filename)
 
 def get_all_records(filename: str) -> List[Dict[str, Any]]:
