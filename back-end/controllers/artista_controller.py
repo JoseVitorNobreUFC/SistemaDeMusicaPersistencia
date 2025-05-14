@@ -68,10 +68,10 @@ def create_artist(artist: ArtistaCreate):
 @router.put("/{artist_id}")
 def update_artist(artist_id: int, artist: ArtistaCreate):
   success = artista_service.update_artist(artist_id, artist)
-  return artista_service.update_artist(artist_id, artist)
+  return {"message": "Artista atualizado(a) com sucesso"}
 
 
 @router.delete("/{artist_id}")
 def delete_artist(artist_id: int):
   success = artista_service.delete_artist(artist_id)
-  return artista_service.delete_artist(artist_id)
+  return {"message": "Artista removido(a) com sucesso"}

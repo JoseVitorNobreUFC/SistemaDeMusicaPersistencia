@@ -51,6 +51,10 @@ def check_empty_fields(ordered_data: Dict[str, str]):
     raise HTTPException(status_code=400, detail=f"Campos {', '.join(empty_fields)} nao podem ser vazios")
 
 def create_album(album: AlbumCreate):
+  if not album.artista_id.isdigit():
+    logger.log_error("Erro: artista_id deve ser um número")
+    raise HTTPException(status_code=400, detail="artista_id deve ser um número")
+
   artista = get_record_by_id(ARTISTA_CSV_PATH, int(album.artista_id))
   if not artista:
     logger.log_error("Erro: Não é possivel criar um album referente a um artista que não existe")
@@ -70,15 +74,19 @@ def create_album(album: AlbumCreate):
   return create_record(ALBUM_CSV_PATH, ordered_data)
 
 def update_album(album_id: int, album: AlbumCreate):
-  album = get_record_by_id(ALBUM_CSV_PATH, album_id)
-  if not album:
+  target_album = get_record_by_id(ALBUM_CSV_PATH, album_id)
+  if not target_album:
     logger.log_error("Erro: Album nao encontrado")
     raise HTTPException(status_code=404, detail="Album nao encontrado")
-  
-  artista = get_record_by_id(ARTISTA_CSV_PATH, int(album.artista_id))
+
+  artista = get_record_by_id(ARTISTA_CSV_PATH, int(target_album.get("artista_id")))
   if not artista:
     logger.log_error("Erro: Não é possivel atualizar um album referente a um artista que não existe")
     raise HTTPException(status_code=400, detail="Id de Artista não existe") 
+
+  if not album.artista_id.isdigit():
+    logger.log_error("Erro: artista_id deve ser um número")
+    raise HTTPException(status_code=400, detail="artista_id deve ser um número")
 
   ordered_data = {
         "nome": album.nome,
@@ -97,14 +105,9 @@ def delete_album(album_id: int):
     logger.log_error("Erro: Album nao encontrado")
     raise HTTPException(status_code=404, detail="Album nao encontrado")
   
-  artista = get_record_by_id(ARTISTA_CSV_PATH, int(album.artista_id))
-  if not artista:
-    logger.log_error("Erro: Não é possivel excluir um album referente a um artista que não existe")
-    raise HTTPException(status_code=400, detail="Id de Artista não existe") 
-
   musics = get_all_records(MUSICA_CSV_PATH)
   for musica in musics:
-    if int(musica["album_id"]) == album_id:
+    if int(musica["id_album"]) == album_id:
       logger.log_error("Erro: Não é possivel excluir um album com musicas")
       raise HTTPException(status_code=400, detail="Album possui musicas")
 
