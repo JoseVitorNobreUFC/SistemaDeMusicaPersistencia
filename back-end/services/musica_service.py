@@ -69,6 +69,10 @@ def create_music(music: MusicaCreate):
     return create_record(MUSIC_CSV_PATH, ordered_data)
 
 def update_music(music_id: int, music: MusicaCreate):
+    if not music.id_album.isdigit():
+        logger.log_error("Erro: id_album deve ser um número")
+        raise HTTPException(status_code=400, detail="id_album deve ser um número")
+
     target_music = get_record_by_id(MUSIC_CSV_PATH, music_id)
     if not target_music:
         logger.log_error("Erro: Musica nao encontrada")
@@ -78,6 +82,10 @@ def update_music(music_id: int, music: MusicaCreate):
     if not album:
         logger.log_error("Erro: Album nao encontrado")
         raise HTTPException(status_code=400, detail="Id de Album não existe")
+
+    if not music.id_album.isdigit():
+        logger.log_error("Erro: id_album deve ser um número")
+        raise HTTPException(status_code=400, detail="id_album deve ser um número")          
 
     ordered_data = {
         "nome": music.nome,

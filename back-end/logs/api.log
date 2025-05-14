@@ -1,2 +1,37 @@
-2025-04-29 11:52:07,172 - INFO - Zip gerado com sucesso
-2025-04-29 11:52:53,351 - ERROR - Arquivo CSV de artistas não encontrado
+2025-05-14 16:47:40,506 - INFO - Buscando todos os artistas
+2025-05-14 16:47:40,591 - INFO - Buscando todos os artistas
+2025-05-14 16:47:59,936 - INFO - Buscando todos os artistas
+2025-05-14 16:50:53,025 - INFO - Buscando todos os artistas
+2025-05-14 16:51:11,049 - INFO - Artista criado com sucesso
+2025-05-14 16:51:35,533 - INFO - Buscando quantidade de artistas
+2025-05-14 16:51:35,533 - INFO - Buscando todos os artistas
+2025-05-14 16:52:25,484 - INFO - Buscando todos os artistas
+2025-05-14 16:52:33,301 - INFO - Buscando quantidade de artistas
+2025-05-14 16:52:33,301 - INFO - Buscando todos os artistas
+2025-05-14 16:52:48,351 - INFO - Artista criado com sucesso
+2025-05-14 16:55:52,407 - INFO - Artista criado com sucesso
+2025-05-14 16:56:03,326 - INFO - Artista criado com sucesso
+2025-05-14 16:56:17,684 - INFO - Buscando quantidade de artistas
+2025-05-14 16:56:17,684 - INFO - Buscando todos os artistas
+2025-05-14 16:56:38,486 - INFO - Pesquisando artistas
+2025-05-14 16:56:58,388 - INFO - Zip gerado com sucesso
+2025-05-14 16:57:20,727 - INFO - Hash gerado com sucesso
+2025-05-14 16:57:31,614 - INFO - Hash gerado com sucesso
+2025-05-14 16:57:38,008 - INFO - XML gerado com sucesso
+2025-05-14 16:57:39,278 - INFO - XML gerado com sucesso
+2025-05-14 16:58:03,387 - INFO - Buscando artista
+2025-05-14 16:58:41,874 - INFO - Artista atualizado com sucesso
+2025-05-14 16:58:41,875 - INFO - Artista atualizado com sucesso
+2025-05-14 17:00:18,391 - INFO - Artista atualizado com sucesso
+2025-05-14 17:00:48,139 - INFO - Artista excluido com sucesso
+2025-05-14 17:01:06,697 - ERROR - Erro: Artista nao encontrado
+2025-05-14 17:01:28,820 - INFO - Artista excluido com sucesso
+2025-05-14 17:01:39,536 - INFO - Buscando todos os albuns
+2025-05-14 17:01:41,789 - INFO - Buscando todos os albuns
+2025-05-14 17:02:24,077 - INFO - Album criado com sucesso
+2025-05-14 17:05:50,956 - ERROR - Erro: artista_id deve ser um número
+2025-05-14 17:09:03,164 - INFO - Buscando quantidade de álbuns
+2025-05-14 17:09:03,164 - INFO - Buscando todos os albuns
+2025-05-14 17:09:29,869 - INFO - Pesquisando álbuns
+2025-05-14 17:09:47,771 - INFO - Pesquisando álbuns
+2025-05-14 17:09:57,120 - INFO - Pesquisando álbuns

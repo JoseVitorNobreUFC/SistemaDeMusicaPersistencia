@@ -62,8 +62,12 @@ def get_next_id(filename: str) -> int:
     return max(ids) + 1 if ids else 1
 
 def create_record(filename: str, record: Dict[str, Any]):
+    existing_records = read_csv(filename)
     fieldnames = list(record.keys())
-    write_csv(filename, [record])
+    if existing_records:
+        fieldnames = list(existing_records[0].keys())
+    existing_records.append(record)
+    write_csv(filename, existing_records)
     return get_all_records(filename)
 
 def get_all_records(filename: str) -> List[Dict[str, Any]]:

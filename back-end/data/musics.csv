@@ -1,6 +1,11 @@
-id,nome,id_album,data_lancamento,duracao
-1,Stairway to Heaven,1,08/11/1971,08:02
-2,Stairway to Heaven,1,08/11/1971,08:02
-3,Paranoid,2,18/09/1970,02:57
-4,War Pigs,4,18/09/1970,07:56
-5,War Pigs,4,18/09/1970,07:56
+id,nome,album_id,data_lancamento,duracao
+1,Crazy in Love,1,2003-05-18,3:56
+2,Blinding Lights,2,2019-11-29,3:20
+3,Rolling in the Deep,3,2010-11-29,3:48
+4,The Scientist,4,2002-08-26,5:09
+5,Show das Poderosas,5,2013-04-16,2:49
+6,Alright,6,2015-03-15,3:39
+7,Shake It Off,7,2014-08-18,3:39
+8,ON,8,2020-02-21,4:06
+9,Safaera,9,2020-02-28,4:56
+10,Do I Wanna Know?,10,2013-06-18,4:33

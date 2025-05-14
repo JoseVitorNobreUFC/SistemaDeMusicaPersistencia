@@ -51,6 +51,10 @@ def check_empty_fields(ordered_data: Dict[str, str]):
     raise HTTPException(status_code=400, detail=f"Campos {', '.join(empty_fields)} nao podem ser vazios")
 
 def create_album(album: AlbumCreate):
+  if not album.artista_id.isdigit():
+    logger.log_error("Erro: artista_id deve ser um número")
+    raise HTTPException(status_code=400, detail="artista_id deve ser um número")
+
   artista = get_record_by_id(ARTISTA_CSV_PATH, int(album.artista_id))
   if not artista:
     logger.log_error("Erro: Não é possivel criar um album referente a um artista que não existe")
@@ -79,6 +83,10 @@ def update_album(album_id: int, album: AlbumCreate):
   if not artista:
     logger.log_error("Erro: Não é possivel atualizar um album referente a um artista que não existe")
     raise HTTPException(status_code=400, detail="Id de Artista não existe") 
+
+  if not album.artista_id.isdigit():
+    logger.log_error("Erro: artista_id deve ser um número")
+    raise HTTPException(status_code=400, detail="artista_id deve ser um número")
 
   ordered_data = {
         "nome": album.nome,
