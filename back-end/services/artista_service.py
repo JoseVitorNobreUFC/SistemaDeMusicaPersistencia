@@ -31,7 +31,7 @@ def get_artist_by_id(artist_id):
   artist = get_record_by_id(AUTHOR_CSV_PATH, artist_id)
   if not artist:
     logger.log_error("Erro: Artista nao encontrado")
-    raise HTTPException(status_code=400, detail="Id de Artista nao encontrado")
+    raise HTTPException(status_code=404, detail="Id de Artista nao encontrado")
 
   logger.log_info("Buscando artista")
   return artist
