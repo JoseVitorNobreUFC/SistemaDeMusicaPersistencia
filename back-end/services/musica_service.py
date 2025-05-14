@@ -50,6 +50,10 @@ def check_empty_fields(ordered_data: Dict[str, str]):
         raise HTTPException(status_code=400, detail=f"Campos {', '.join(empty_fields)} nao podem ser vazios")
 
 def create_music(music: MusicaCreate):
+    if not music.id_album.isdigit():
+        logger.log_error("Erro: id_album deve ser um número")
+        raise HTTPException(status_code=400, detail="id_album deve ser um número")
+
     album = get_record_by_id(ALBUM_CSV_PATH, int(music.id_album))
     if not album:
         logger.log_error("Erro: Album nao encontrado")
@@ -69,15 +73,19 @@ def create_music(music: MusicaCreate):
     return create_record(MUSIC_CSV_PATH, ordered_data)
 
 def update_music(music_id: int, music: MusicaCreate):
-    music = get_record_by_id(MUSIC_CSV_PATH, music_id)
-    if not music:
+    target_music = get_record_by_id(MUSIC_CSV_PATH, music_id)
+    if not target_music:
         logger.log_error("Erro: Musica nao encontrada")
         raise HTTPException(status_code=404, detail="Música nao encontrada")
 
-    album = get_record_by_id(ALBUM_CSV_PATH, int(music.id_album))
+    album = get_record_by_id(ALBUM_CSV_PATH, int(target_music.get("id_album")))
     if not album:
         logger.log_error("Erro: Album nao encontrado")
         raise HTTPException(status_code=400, detail="Id de Album não existe")
+
+    if not music.id_album.isdigit():
+        logger.log_error("Erro: id_album deve ser um número")
+        raise HTTPException(status_code=400, detail="id_album deve ser um número")          
 
     ordered_data = {
         "nome": music.nome,
@@ -95,11 +103,6 @@ def delete_music(music_id: int):
     if not music:
         logger.log_error("Erro: Musica nao encontrada")
         raise HTTPException(status_code=404, detail="Música nao encontrada")
-
-    album = get_record_by_id(ALBUM_CSV_PATH, int(music.id_album))
-    if not album:
-        logger.log_error("Erro: Album nao encontrado")
-        raise HTTPException(status_code=400, detail="Id de Album não existe")
 
     logger.log_info("Musica excluida com sucesso")
     return delete_record(MUSIC_CSV_PATH, music_id)
